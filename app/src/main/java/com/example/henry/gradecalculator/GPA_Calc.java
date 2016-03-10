@@ -1,5 +1,6 @@
 package com.example.henry.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -106,10 +107,6 @@ public class GPA_Calc extends AppCompatActivity {
             try {
                 units = Integer.parseInt(ut);
             } catch (NumberFormatException e) {
-                Toast.makeText(this,
-                               "Please enter a valid number for units",
-                                Toast.LENGTH_SHORT
-                ).show();
                 continue;
             }
 
@@ -119,6 +116,12 @@ public class GPA_Calc extends AppCompatActivity {
         }
         double gpa = totPts/totUnits;
         gpa = Math.round(gpa*100.0)/100.0; //round to 2 decimal places
-        
+
+        Intent intent = new Intent(this, DisplayActivity.class);
+        intent.putExtra("gpa", gpa);
+        intent.putExtra("caller", "GPA");
+        startActivity(intent);
+
+        finish();
     }
 }

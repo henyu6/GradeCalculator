@@ -14,7 +14,8 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void gradeBtnClick(View view) {
-
+        Intent intent = new Intent(this, CalcGrade.class);
+        startActivity(intent);
     }
 
     public void gpaBtnClick(View view) {
