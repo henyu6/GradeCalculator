@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class GPA_Calc extends AppCompatActivity {
 
     @Override
@@ -63,58 +65,60 @@ public class GPA_Calc extends AppCompatActivity {
 
         int creditHours = 0;
 
-        String gr;
+        String gr, ut;
         int units;
         int totUnits = 0;
         double totPts = 0, pts;
 
         for(int i = 0; i < 6; i++) {
             //get correct edit text fields
-            switch(i) {
-                case 0:
-                    gradeEdit = (EditText)findViewById(R.id.grade1);
-                    unitEdit = (EditText)findViewById(R.id.unit1);
-                    break;
-                case 1:
-                    gradeEdit = (EditText)findViewById(R.id.grade2);
-                    unitEdit = (EditText)findViewById(R.id.unit2);
-                    break;
-                case 2:
-                    gradeEdit = (EditText)findViewById(R.id.grade3);
-                    unitEdit = (EditText)findViewById(R.id.unit3);
-                    break;
-                case 3:
-                    gradeEdit = (EditText)findViewById(R.id.grade4);
-                    unitEdit = (EditText)findViewById(R.id.unit4);
-                    break;
-                case 4:
-                    gradeEdit = (EditText)findViewById(R.id.grade5);
-                    unitEdit = (EditText)findViewById(R.id.unit5);
-                    break;
-                case 5:
-                    gradeEdit = (EditText)findViewById(R.id.grade5);
-                    unitEdit = (EditText)findViewById(R.id.unit5);
-                    break;
+            if (i == 0) {
+                gradeEdit = (EditText) findViewById(R.id.grade1);
+                unitEdit = (EditText) findViewById(R.id.unit1);
+            } else if (i == 1) {
+                gradeEdit = (EditText) findViewById(R.id.grade2);
+                unitEdit = (EditText) findViewById(R.id.unit2);
+            } else if (i == 2) {
+                gradeEdit = (EditText) findViewById(R.id.grade3);
+                unitEdit = (EditText) findViewById(R.id.unit3);
+            } else if (i == 3) {
+                gradeEdit = (EditText) findViewById(R.id.grade4);
+                unitEdit = (EditText) findViewById(R.id.unit4);
+            } else if (i == 4) {
+                gradeEdit = (EditText) findViewById(R.id.grade5);
+                unitEdit = (EditText) findViewById(R.id.unit5);
+            } else if (i == 5) {
+                gradeEdit = (EditText) findViewById(R.id.grade5);
+                unitEdit = (EditText) findViewById(R.id.unit5);
             }
 
             //empty fields
-            if (gradeEdit.getText().toString().equals("")
-                    || unitEdit.getText().toString().equals(""))
+            gr = gradeEdit.getText().toString();
+            ut = unitEdit.getText().toString();
+
+            if (gr.equals("") || ut.equals("")
+                    || unitEdit.getText() == null || gradeEdit.getText() == null) {
                 continue;
+            }
 
             //get the text values
-            gr = gradeEdit.getText().toString();
-            units = Integer.getInteger(unitEdit.getText().toString());
             pts = gradeToPoints(gr);
+            try {
+                units = Integer.parseInt(ut);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this,
+                               "Please enter a valid number for units",
+                                Toast.LENGTH_SHORT
+                ).show();
+                continue;
+            }
 
             //calculate total
-            totPts = (pts*units) + totPts;
+            totPts = (pts * units) + totPts;
             totUnits += units;
         }
-
         double gpa = totPts/totUnits;
-
-
-
+        gpa = Math.round(gpa*100.0)/100.0; //round to 2 decimal places
+        
     }
 }
