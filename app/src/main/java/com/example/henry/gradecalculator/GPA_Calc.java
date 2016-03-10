@@ -58,8 +58,8 @@ public class GPA_Calc extends AppCompatActivity {
     }
 
     public void finishedBtn(View view) {
-        EditText gradeEdit = (EditText)findViewById(R.id.grade1);
-        EditText unitEdit = (EditText)findViewById(R.id.unit1);
+        EditText gradeEdit = null;
+        EditText unitEdit = null;
 
         int creditHours = 0;
 
@@ -69,6 +69,34 @@ public class GPA_Calc extends AppCompatActivity {
         double totPts = 0, pts;
 
         for(int i = 0; i < 6; i++) {
+            //get correct edit text fields
+            switch(i) {
+                case 0:
+                    gradeEdit = (EditText)findViewById(R.id.grade1);
+                    unitEdit = (EditText)findViewById(R.id.unit1);
+                    break;
+                case 1:
+                    gradeEdit = (EditText)findViewById(R.id.grade2);
+                    unitEdit = (EditText)findViewById(R.id.unit2);
+                    break;
+                case 2:
+                    gradeEdit = (EditText)findViewById(R.id.grade3);
+                    unitEdit = (EditText)findViewById(R.id.unit3);
+                    break;
+                case 3:
+                    gradeEdit = (EditText)findViewById(R.id.grade4);
+                    unitEdit = (EditText)findViewById(R.id.unit4);
+                    break;
+                case 4:
+                    gradeEdit = (EditText)findViewById(R.id.grade5);
+                    unitEdit = (EditText)findViewById(R.id.unit5);
+                    break;
+                case 5:
+                    gradeEdit = (EditText)findViewById(R.id.grade5);
+                    unitEdit = (EditText)findViewById(R.id.unit5);
+                    break;
+            }
+
             //empty fields
             if (gradeEdit.getText().toString().equals("")
                     || unitEdit.getText().toString().equals(""))
@@ -76,7 +104,7 @@ public class GPA_Calc extends AppCompatActivity {
 
             //get the text values
             gr = gradeEdit.getText().toString();
-            units = Integer.getInteger(unitEdit.getText().toString()).intValue();
+            units = Integer.getInteger(unitEdit.getText().toString());
             pts = gradeToPoints(gr);
 
             //calculate total
