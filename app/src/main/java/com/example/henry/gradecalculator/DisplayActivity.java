@@ -28,7 +28,7 @@ public class DisplayActivity extends AppCompatActivity {
         }
         else if(caller.equals("grade")) {
             result = intent.getDoubleExtra("percentNeeded", 0.0);
-            display.setText("The percent you need in the category is: ");
+            display.setText("Needed Percentage: ");
             res.setText(result + "");
         }
     }

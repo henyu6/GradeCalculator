@@ -1,7 +1,9 @@
 package com.example.henry.gradecalculator;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class CalcGrade extends AppCompatActivity {
         setContentView(R.layout.activity_calc_grade);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void addAField(View view) {
         RelativeLayout myLayout = (RelativeLayout)findViewById(R.id.myLayout);
         LinearLayout linearLayout = new LinearLayout(this);
@@ -106,10 +110,14 @@ public class CalcGrade extends AppCompatActivity {
             currTotal = point * weight + currTotal;
             percents += weight;
         }
+
+        //perform necessary calculations
         currTotal = currTotal / 100;
+        Toast.makeText(this, currTotal + "", Toast.LENGTH_SHORT).show();
         percents = 100 - percents; // remaining percentage needed
         double percentNeeded = desiredPercent - currTotal;
         percentNeeded = percentNeeded/percents;
+        percentNeeded = percentNeeded * 100;
 
         Intent intent = new Intent(this, DisplayActivity.class);
         intent.putExtra("caller", "grade");
