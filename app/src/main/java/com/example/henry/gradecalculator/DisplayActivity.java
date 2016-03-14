@@ -26,6 +26,11 @@ public class DisplayActivity extends AppCompatActivity {
             display.setText("Your GPA is: ");
             res.setText(result + "");
         }
+        else if(caller.equals("grade")) {
+            result = intent.getDoubleExtra("percentNeeded", 0.0);
+            display.setText("The percent you need in the category is: ");
+            res.setText(result + "");
+        }
     }
 
     public void returnHomeBtn(View view) {

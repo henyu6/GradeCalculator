@@ -4,16 +4,19 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
 public class CalcGrade extends AppCompatActivity {
     int currLinearLayout = R.id.input1;
-    int currPoints = R.id.points1;
-    int currWeight = R.id.weight1;
+    ArrayList<Integer> points = new ArrayList<>();
+    ArrayList<Integer> weights = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,16 @@ public class CalcGrade extends AppCompatActivity {
         linearLayout.addView(field1);
         linearLayout.addView(field2);
 
-        //set id
-        linearLayout.setId(currLinearLayout+1);
-        field1.setId(currPoints+1);
-        field2.setId(currWeight+1);
+        //keep track of ids
+        int point = View.generateViewId();
+        int weight = View.generateViewId();
+        points.add(point);
+        weights.add(weight);
+
+        //set ids
+        linearLayout.setId(currLinearLayout + 1);
+        field1.setId(point);
+        field2.setId(weight);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -59,8 +68,6 @@ public class CalcGrade extends AppCompatActivity {
         params.addRule(RelativeLayout.BELOW, currLinearLayout);
         myLayout.addView(linearLayout, params);
         currLinearLayout++;
-        currPoints++;
-        currWeight++;
     }
 
 
@@ -75,16 +82,19 @@ public class CalcGrade extends AppCompatActivity {
             desiredPercent = 0;
         }
 
-        currPoints = R.id.points1;
-        currWeight = R.id.weight1;
-        EditText pointsField = (EditText) findViewById(R.id.points1);
-        EditText weightsField = (EditText) findViewById(R.id.weight1);
+        points.add(R.id.points1);
+        weights.add(R.id.weight1);
+
+        EditText pointsField;
+        EditText weightsField;
 
         double point, weight, currTotal = 0;
         double percents = 0;
 
         //calculate how much percent is still needed
-        while (pointsField != null && weightsField != null) {
+        for(int index = 0; index < points.size(); index++) {
+            pointsField = (EditText) findViewById(points.get(index));
+            weightsField = (EditText) findViewById(weights.get(index));
             try {
                 point = Integer.parseInt(pointsField.getText().toString());
                 weight = Integer.parseInt(weightsField.getText().toString());
@@ -95,8 +105,6 @@ public class CalcGrade extends AppCompatActivity {
 
             currTotal = point * weight + currTotal;
             percents += weight;
-            pointsField = (EditText) findViewById(++currPoints);
-            weightsField = (EditText) findViewById(++currWeight);
         }
         currTotal = currTotal / 100;
         percents = 100 - percents; // remaining percentage needed
