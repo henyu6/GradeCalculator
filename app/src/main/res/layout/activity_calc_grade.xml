@@ -25,12 +25,14 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Points in category"
-            android:layout_weight="1"/>
+            android:hint="Percent in category"
+            android:layout_weight="1"
+            android:id="@+id/points1"/>
         <EditText
+            android:id="@+id/weight1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Category weight"
+            android:hint="Percent of Category"
             android:layout_weight="1"/>
     </LinearLayout>
 
